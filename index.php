@@ -3,19 +3,8 @@ $givenLength = $_GET['length'] ?? 0;
 if ($_GET['length'] <= 0) {
     $givenLength = 0;
 }
-
-function createNewPass($length)
-{
-    $char = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?';
-    $pass="";
-    for ($i = 0; $i < $length; $i++) {
-        $x=str_shuffle($char);
-        $pass.= substr($x, 0, 1);
-    }
-    return $pass;
-}
+require_once __DIR__ . "/functions.php";
 ?>
-
 
 <!DOCTYPE html>
 <html lang="it">
