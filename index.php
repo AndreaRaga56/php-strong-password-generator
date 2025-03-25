@@ -1,9 +1,24 @@
 <?php
-$givenLength = $_GET['length'] ?? 0;
-if ($_GET['length'] <= 0) {
-    $givenLength = 0;
-}
+session_start();
 require_once __DIR__ . "/functions.php";
+
+$givenLength = 0;
+$password = "";
+
+if (isset($_GET['length'])) {
+    if ($_GET['length'] >= 0) {
+        $givenLength = (int)$_GET['length'];
+        $password = "La tua password di $givenLength caratteri è " . createNewPass($givenLength);
+    } else {
+        $password = "Nessun parametro valido inserito";
+    }
+    $_SESSION["pass"] = $password;
+};
+
+if ($password != "") {
+    header('Location: ./result.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -24,20 +39,28 @@ require_once __DIR__ . "/functions.php";
             <h2 class="mt-2">Genera una Password Sicura</h2>
         </header>
 
-        <div class="answer">
-            <?php
-            if ($givenLength != 0) {
-                echo createNewPass($givenLength);
-            } else {
-                echo "Nessun parametro valido inserito";
-            }
-            ?>
-        </div>
-
         <form method="$_GET">
-            <label for="length">Lunghezza Password</label>
-            <input name="length" id="length" type="number">
-            <br>
+            <div class="mb-3">
+                <label for="length" class="form-label">Lunghezza Password</label>
+                <input name="length" id="length" type="number" class="form-control" min="0" placeholder="Inserisci la lunghezza">
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="include_uppercase" id="include_uppercase" value="1">
+                <label class="form-check-label" for="include_uppercase">Includi Lettere Maiuscole</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="include_lowercase" id="include_lowercase" value="1">
+                <label class="form-check-label" for="include_lowercase">Includi Lettere Minuscole</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="include_numbers" id="include_numbers" value="1">
+                <label class="form-check-label" for="include_numbers">Includi Numeri</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="include_symbols" id="include_symbols" value="1">
+                <label class="form-check-label" for="include_symbols">Includi Simboli</label>
+            </div>
             <button class="btn btn-secondary mt-2">Invia</button>
         </form>
     </div>
