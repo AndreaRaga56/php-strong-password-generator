@@ -1,5 +1,4 @@
-<?php session_start();
-var_dump($_SESSION['pass'])?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="it">

@@ -1,15 +1,19 @@
 <?php
 
-function createNewPass($length){
-    $num = "0123456789";
-    $maiusc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    $minusc = "abcdefghijklmnopqrstuvwxyz";
-    $special = "!@#$%^&*()+-=[]{}|_.<>?";
-    $pass="";
-    for ($i = 0; $i < $length; $i++) {
-        $x=str_shuffle($num);
-        $pass.= substr($x, 0, 1);
+function createNewPass($length, $string, $repetition){
+
+    $pass = "";
+    if ($repetition == 1) {
+        for ($i = 0; $i < $length; $i++) {
+            $x = str_shuffle($string);
+            $pass .= substr($x, 0, 1);
+        }
+    } else {
+        $x = str_shuffle($string);
+        $pass = substr($x, 0, $length);
     }
+
     return $pass;
 }
-?>
+
+

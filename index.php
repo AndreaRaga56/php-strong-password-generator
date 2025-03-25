@@ -6,11 +6,27 @@ $givenLength = 0;
 $password = "";
 
 if (isset($_GET['length'])) {
-    if ($_GET['length'] >= 0) {
+
+    $string = "";
+
+    if (isset($_GET['uppercase']) && $_GET['uppercase'] == 1) {
+        $string .=  "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }
+    if (isset($_GET['lowercase']) && $_GET['lowercase'] == 1) {
+        $string .= "abcdefghijklmnopqrstuvwxyz";
+    }
+    if (isset($_GET['symbols']) && $_GET['symbols'] == 1) {
+        $string .= "!@#$%^&*()+-=[]{}|_.<>?";
+    }
+    if (isset($_GET['numbers']) && $_GET['numbers'] == 1) {
+        $string .= "0123456789";
+    }
+
+    if ($_GET['length'] > 0 && $string != "" && isset($_GET['repetition']) && $_GET['length'] <= strlen($string)) {
         $givenLength = (int)$_GET['length'];
-        $password = "La tua password di $givenLength caratteri è " . createNewPass($givenLength);
+        $password = "La tua password di $givenLength caratteri è " . createNewPass($givenLength, $string, $_GET['repetition']);
     } else {
-        $password = "Nessun parametro valido inserito";
+        $password = "I parametri inseriti non sono validi";
     }
     $_SESSION["pass"] = $password;
 };
@@ -45,22 +61,38 @@ if ($password != "") {
                 <input name="length" id="length" type="number" class="form-control" min="0" placeholder="Inserisci la lunghezza">
             </div>
 
+            <br>
+
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="include_uppercase" id="include_uppercase" value="1">
-                <label class="form-check-label" for="include_uppercase">Includi Lettere Maiuscole</label>
+                <input class="form-check-input" type="checkbox" name="uppercase" id="uppercase" value="1">
+                <label class="form-check-label" for="uppercase">Includi Lettere Maiuscole</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="include_lowercase" id="include_lowercase" value="1">
-                <label class="form-check-label" for="include_lowercase">Includi Lettere Minuscole</label>
+                <input class="form-check-input" type="checkbox" name="lowercase" id="lowercase" value="1">
+                <label class="form-check-label" for="lowercase">Includi Lettere Minuscole</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="include_numbers" id="include_numbers" value="1">
-                <label class="form-check-label" for="include_numbers">Includi Numeri</label>
+                <input class="form-check-input" type="checkbox" name="numbers" id="numbers" value="1">
+                <label class="form-check-label" for="numbers">Includi Numeri</label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="include_symbols" id="include_symbols" value="1">
-                <label class="form-check-label" for="include_symbols">Includi Simboli</label>
+                <input class="form-check-input" type="checkbox" name="symbols" id="symbols" value="1">
+                <label class="form-check-label" for="symbols">Includi Simboli</label>
             </div>
+
+            <br>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="repetition" id="repetitionYes" value="1" checked>
+                <label class="form-check-label" for="repetitionYes">Permetti Ripetizioni di Caratteri</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="repetition" id="repetitionNo" value="0">
+                <label class="form-check-label" for="repetitionNo">Non Permettere Ripetizioni di Caratteri</label>
+            </div>
+
+            <br>
+
             <button class="btn btn-secondary mt-2">Invia</button>
         </form>
     </div>
