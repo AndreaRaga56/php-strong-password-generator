@@ -22,16 +22,16 @@ if (isset($_GET['length'])) {
         $string .= "0123456789";
     }
 
-    if ($_GET['length'] > 0 && $string != "" && isset($_GET['repetition']) && $_GET['length'] <= strlen($string)) {
+    if ($_GET['length'] > 0 && $string != "" && isset($_GET['repetition']) && ($_GET['length'] <= strlen($string))||($_GET['repetition']="1")) {
         $givenLength = (int)$_GET['length'];
         $password = "La tua password di $givenLength caratteri è " . createNewPass($givenLength, $string, $_GET['repetition']);
     } else {
-        $password = "I parametri inseriti non sono validi";
+        $password = "X";
     }
     $_SESSION["pass"] = $password;
 };
 
-if ($password != "") {
+if ($password != "" && $password != "X") {
     header('Location: ./result.php');
 }
 
@@ -55,6 +55,10 @@ if ($password != "") {
             <h2 class="mt-2">Genera una Password Sicura</h2>
         </header>
 
+        <?php if ($password == "X"){ ?>
+            <div class="answer">I parametri inseriti non sono validi</div>
+        <?php }?>
+    
         <form method="$_GET">
             <div class="mb-3">
                 <label for="length" class="form-label">Lunghezza Password</label>
