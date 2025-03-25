@@ -16,7 +16,7 @@ if (isset($_GET['length'])) {
         $string .= "abcdefghijklmnopqrstuvwxyz";
     }
     if (isset($_GET['symbols']) && $_GET['symbols'] == 1) {
-        $string .= "!@#%^&*()+-=[]{}|_.<>?";
+        $string .= "#[{(|.&*@%^_=+<>-";
     }
     if (isset($_GET['numbers']) && $_GET['numbers'] == 1) {
         $string .= "0123456789";
