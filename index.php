@@ -22,7 +22,7 @@ if (isset($_GET['length'])) {
         $string .= "0123456789";
     }
 
-    if ($_GET['length'] > 0 && $string != "" && isset($_GET['repetition']) && ($_GET['length'] <= strlen($string))||($_GET['repetition']="1")) {
+    if ($_GET['length'] > 0 && $string != "" && isset($_GET['repetition']) && ($_GET['length'] <= strlen($string))||($_GET['repetition']=="1")) {
         $givenLength = (int)$_GET['length'];
         $password = "La tua password di $givenLength caratteri è " . createNewPass($givenLength, $string, $_GET['repetition']);
     } else {
